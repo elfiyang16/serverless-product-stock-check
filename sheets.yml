@@ -1,0 +1,4 @@
+product_list:
+  filename: "product_list.csv"
+  spreadsheet_id: "1JWri6pN3ZHL3a1lZtyqIly8H_-cWQw3nU-g_Svf5lYM"
+  range_name: "Sheet1!A:E"
