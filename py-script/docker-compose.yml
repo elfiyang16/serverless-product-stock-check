@@ -1,0 +1,15 @@
+version: "3.8"
+services:
+  myservice:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: result/latest
+    environment:
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} #
+      - AWS_ACCESS_KEY_SECRET=${AWS_ACCESS_KEY_SECRET} #
+      - REGION=${REGION} #
+      # RUN echo "Oh dang look at that $some_variable_name"
+    volumes:
+      - ./downloaded:/downloaded
+    command: python process.py
