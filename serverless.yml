@@ -1,0 +1,52 @@
+service: lambda
+app: product-sanity
+
+frameworkVersion: "2"
+
+provider:
+  name: aws
+  runtime: python3.8
+  lambdaHashingVersion: 20201221
+  region: eu-west-1
+  profile: elfi-tester
+  versionFunctions: false
+
+functions:
+  stock_check:
+    handler: handler.stock_check
+    name: stock_check_lambda
+    description: Check stocklevel and save items to be refilled in json to S3
+    # environment:
+    #   ACCESS_KEY_ID: ${env.ACCESS_KEY_ID}
+    #   ACCESS_KEY_SECRET: ${env.ACCESS_KEY_SECRET}
+    layers:
+      - { Ref: PythonRequirementsLambdaLayer }
+    events:
+      - s3:
+          bucket: gsheets-product-data
+          event: s3:ObjectCreated:Put
+          rules:
+            - prefix: product_list
+            - suffix: .csv
+          existing: true
+
+package:
+  exclude:
+    - node_modules/**
+    - .vscode/**
+    - py-script/**
+    - venv/**
+    - .requirements.zip
+    - package.json
+    - package-lock.json
+    - runPython.sh
+    - README.md
+
+plugins:
+  - serverless-python-requirements
+  # - serverless-dotenv-plugin
+custom:
+  pythonRequirements:
+    dockerizePip: true
+    slim: true
+    layer: true

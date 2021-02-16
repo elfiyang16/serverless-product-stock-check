@@ -3,3 +3,5 @@ venv
 credentials.json
 .env
 .vscode
+node_modules
+.serverless
