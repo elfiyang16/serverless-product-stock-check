@@ -28,7 +28,7 @@ This part is built and deployed using `serverless` framework.
 
 Install `serverless` npm package globally and `sls deploy` to deploy, `sls invoke --function stock-check` to invoke, and `sls remove` to delete the stack. 
 
-Currently a lot more refactoring to be done. Ideally I would like to create a Producer-Consumer workflow to allow _Stock-Check` worker to send messages to SQS queue,
+Currently a lot more refactoring to be done. Ideally I would like to create a Producer-Consumer workflow to allow _Stock-Check_ worker to send messages to SQS queue,
 and then MyConsumerFunction receives and processes messages from queue and maybe push notification through some Twilio API:
 `lambda(MyJobFunction) -> sqs(my-queue) -> lambda(MyConsumerFunction)`
 
