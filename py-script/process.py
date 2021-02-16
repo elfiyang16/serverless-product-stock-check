@@ -6,12 +6,12 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 import pandas as pd
 import os
-from io import StringIO
-import io
+from io import StringIO, BytesIO
 import boto3
 import botocore
 import yaml
 from datetime import datetime
+
 
 
 from dotenv import load_dotenv
@@ -96,8 +96,9 @@ def download_from_bucket(FILE_NAME, BUCKET_NAME='gsheets-product-data'):
         print("The file does not exist.")
       else:
         raise
-    df = pd.read_csv(io.BytesIO(obj['Body'].read()), encoding='utf8')
+    df = pd.read_csv(BytesIO(obj['Body'].read()), encoding='utf8', converters={'Quantity': int})
     df.to_json (path_or_buf=f'./downloaded/{str(datetime.now())}.json')
+    
     print(f'download csv object {FILE_NAME} from {BUCKET_NAME}')
   
 
